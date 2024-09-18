@@ -1,0 +1,1 @@
+本课程未根据Assignment编码，使用tensorflow框架实现CBOW模型的神经网络，将单词转为词向量。
