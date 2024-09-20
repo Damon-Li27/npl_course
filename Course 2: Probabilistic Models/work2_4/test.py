@@ -16,7 +16,7 @@ with open('shakespeare.txt') as f:
 data = re.sub(r'[,!?;-]', '.', data)
 #  文本分割为单词
 data = nltk.word_tokenize(data)
-#  转为小写并去除非字母符号
+#  转为小写并去除非字母符号，此时data为一个词汇表
 data = [ch.lower() for ch in data if ch.isalpha() or ch == '.']
 
 # 添加单词与索引之间的映射
@@ -79,6 +79,9 @@ def model(N, V, num_iters, learning_rate=0.003):
     W1, W2, b1, b2 = initialize_model(N, V)
     optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=learning_rate)
 
+
+    # y对应中心词索引的位置设为 1，其余全部为0（独热编码），长度为V
+    # x对于上下文的向量表示。其索引位置的值为 “在上下文中出现的次数/上下文词的总数”，其余为0
     for x, y in get_batches(data, word2Ind, V, C, batch_size):
         with tf.GradientTape() as tape:
             z2 = forward_prop(x, W1, W2, b1, b2)
