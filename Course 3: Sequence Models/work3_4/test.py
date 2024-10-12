@@ -166,7 +166,8 @@ def Siamese(vocab_size=len(vocab), d_model=128, mode='train'):
         使用trax生成的Siamese网络
     """
 
-    # 对输入x进行归一化。
+   # 对输入x进行归一化。每个向量x除以它的L2范数,这种归一化将所有向量的L2范数归一到1，
+    # 因此，两个向量的点积（即上面的scores矩阵的元素）会被限制在[-1, 1]范围内。
     def normalize(x):
         return x / fastnp.sqrt(fastnp.sum(x * x, axis=-1, keepdims=True))
 
